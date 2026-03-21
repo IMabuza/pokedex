@@ -16,7 +16,7 @@ class AuthViewModel {
       return;
     }
 
-    _authBloc.add(SignIn(email, email));
+    _authBloc.add(SignIn(email, password));
   }
 
   void register(String email, String password, String confirmPassword) {

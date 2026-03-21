@@ -1,8 +1,16 @@
 part of 'home_bloc.dart';
 
-abstract class HomeEvent extends Equatable {
+class HomeEvent extends Equatable {
   const HomeEvent();
 
   @override
   List<Object> get props => [];
+}
+
+
+class LoadPokemons extends HomeEvent{
+  final int limit;
+  final int offSet;
+
+  const LoadPokemons(this.limit, this.offSet);
 }

@@ -2,12 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokedex/features/auth/views/login_screen.dart';
 import 'package:pokedex/features/auth/views/register_screen.dart';
+import 'package:pokedex/features/home/views/home_screen.dart';
 
-GoRouter router(BuildContext context) {
-  return GoRouter(
+class AppRouter {
+  static final GoRouter _router = GoRouter(
     initialLocation: "/",
     routes: [
-    GoRoute(path: "/", name: "login", builder: (context, state) => LoginScreen(),),
-    GoRoute(path: "/register", name: "register", builder: (context, state) => RegisterScreen(),)
-  ]);
+      GoRoute(
+        path: "/",
+        name: "login",
+        builder: (context, state) => LoginScreen(),
+      ),
+      GoRoute(
+        path: "/register",
+        name: "register",
+        builder: (context, state) => RegisterScreen(),
+      ),
+      GoRoute(
+        path: "/home",
+        name: "home",
+        builder: (context, state) => HomeScreen(),
+      ),
+    ],
+  );
+
+  static GoRouter get router => _router;
 }
