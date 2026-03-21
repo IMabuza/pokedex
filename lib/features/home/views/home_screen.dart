@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokedex/core/widgets/primary_button.dart';
 import 'package:pokedex/features/home/bloc/home_bloc.dart';
 import 'package:pokedex/features/home/bloc/theme/theme_bloc.dart';
 import 'package:pokedex/features/home/view_models/home_view_model.dart';
@@ -34,17 +35,21 @@ class _HomeScreenState extends State<HomeScreen> {
           child: InkWell(
             onTap: () {
               setState(() {
-                isDarkMode = !isDarkMode;
+            
                 homeViewModel.changeTheme(isDarkMode);
+                    isDarkMode = !isDarkMode;
               });
             },
-            child: isDarkMode ? Icon(Icons.dark_mode) : Icon(Icons.light_mode)),
+            child: isDarkMode ? Icon(Icons.light_mode) : Icon(Icons.dark_mode) ),
         )
       ],),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is HomeLoading) {
-            return Center(child: CircularProgressIndicator());
+            if(state.isInitialLoad){
+              return Center(child: CircularProgressIndicator());
+            }
+            
           }
           if (state is HomeLoaded) {
             return ListView.builder(
@@ -52,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Column(
                   children: [
                     ListTile(
+                      key: PageStorageKey("home_list"),
                       title: Text(state.items[index].name),
                       leading: Image(
                         image: NetworkImage(
@@ -59,7 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    Divider()
+                    Divider(),
+                    if(index ==  state.items.indexOf(state.items.reversed.elementAt(0))) PrimaryButton(onPress: () => homeViewModel.loadPokemons(), buttonText: "Load more", isLoading: state is HomeLoading,)
                   ],
                 );
               },

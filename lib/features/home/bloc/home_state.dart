@@ -8,7 +8,10 @@ part of 'home_bloc.dart';
 }
 class HomeInitial extends HomeState {}
 
-class HomeLoading extends HomeState{}
+class HomeLoading extends HomeState{
+    final bool isInitialLoad;
+    const HomeLoading(this.isInitialLoad);
+}
 
 class HomeLoaded extends HomeState{
   final List<PokemonListItem> items;

@@ -6,11 +6,11 @@ class ApiService {
 
   final Dio _dio = Dio(BaseOptions(baseUrl: baseUrl));
 
-  Future<List<PokemonListItem>> fetchPokemon() async {
+  Future<List<PokemonListItem>> fetchPokemon(int offset) async {
     try {
       final response = await _dio.get(
         "/pokemon",
-        queryParameters: {"offet": 0, "limit": 20},
+        queryParameters: {"offset": offset, "limit": 20},
       );
 
       final data = response.data["results"] as List;
