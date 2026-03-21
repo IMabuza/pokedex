@@ -13,6 +13,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthService _authService;
   AuthBloc(this._authService) : super(AuthInitial()) {
     on<SignIn>(_onSignIn);
+    on<Register>(_onRegister);
+    on<Reset>(_onReset);
   }
 
   Future<void> _onSignIn(SignIn event, Emitter<AuthState> emit) async {
@@ -26,9 +28,33 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (user != null) {
         emit(AuthSuccess(user));
       }
-      
     } catch (e) {
       emit(AuthError("Login failed. Please try again"));
     }
+  }
+
+  Future<void> _onRegister(Register event, Emitter<AuthState> emit) async {
+    try {
+      if (event.password != event.confirmPassword) {
+        emit(AuthError("Passwords to not match"));
+        return;
+      }
+      emit(AuthLoading());
+      final AuthUser? user = await _authService.register(
+        event.email,
+        event.password,
+      );
+
+      if (user != null) {
+        emit(AuthSuccess(user));
+      }
+    } catch (e) {
+      emit(AuthError("Registration failed. Please try again"));
+    }
+  }
+
+
+  FutureOr<void> _onReset(Reset event, Emitter<AuthState> emit) {
+    emit(AuthReset());
   }
 }

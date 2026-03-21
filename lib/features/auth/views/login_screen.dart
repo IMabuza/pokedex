@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pokedex/core/widgets/primary_button.dart';
 import 'package:pokedex/features/auth/bloc/auth_bloc.dart';
 
-import '../viewModels/auth_view_model.dart';
+import '../view_models/auth_view_model.dart';
 import '../widgets/email_input.dart';
 import '../widgets/password_input.dart';
 
@@ -65,13 +65,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         EmailInput(emailController: _emailController),
                         PasswordInput(passwordController: _passwordController),
                         SizedBox(height: 20),
-                        PrimaryButton(onPress: () => authViewModel.login(_emailController.text, _passwordController.text), isLoading: state is AuthLoading,),
+                        PrimaryButton(onPress: () => authViewModel.login(_emailController.text, _passwordController.text), isLoading: state is AuthLoading, buttonText: "Login",),
                       ],
                     ),
                   ),
 
                   TextButton(
-                    onPressed: () => context.goNamed("register"),
+                    onPressed: () {
+                      context.goNamed("register");
+                      authViewModel.reset();
+                    },
                     child: Text("Don't have an account? Register here."),
                   ),
                 ],

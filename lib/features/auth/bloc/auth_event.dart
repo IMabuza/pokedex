@@ -14,3 +14,14 @@ class SignIn extends AuthEvent {
 
   const SignIn(this.email, this.password);
 }
+
+
+class Register extends AuthEvent {
+  final String email;
+  final String password;
+  final String confirmPassword;
+
+  const Register(this.email, this.password, this.confirmPassword);
+}
+
+class Reset extends AuthEvent {}

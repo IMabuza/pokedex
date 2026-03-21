@@ -13,4 +13,13 @@ class AuthService {
       rethrow;
     }
   }
+
+   Future<AuthUser?> register(String email, String password) async {
+    try{
+      final result = await  _auth.createUserWithEmailAndPassword(email: email, password: password);
+      return AuthUser(email: result.user!.email!, uid: result.user!.uid);
+    }catch(e){
+      rethrow;
+    }
+  }
 }
