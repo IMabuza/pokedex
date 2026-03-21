@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "416173972105",
+    "project_id": "openapp-71a9b",
+    "storage_bucket": "openapp-71a9b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416173972105:android:1022a92f9cf9196447c458",
+        "android_client_info": {
+          "package_name": "com.example.pokedex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416173972105-h1ggr4f37siqk2lk8b33eqo68d77g9n6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzqOUSPsFNnspyqItFqfy4BjqcVF8q6O4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416173972105-h1ggr4f37siqk2lk8b33eqo68d77g9n6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "416173972105-89vn43ivj646lm14evq031643ebkp3j9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pokedex"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416173972105:android:ed6c8147b41e285747c458",
+        "android_client_info": {
+          "package_name": "za.co.rubiconinteractive.openapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416173972105-h1ggr4f37siqk2lk8b33eqo68d77g9n6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzqOUSPsFNnspyqItFqfy4BjqcVF8q6O4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416173972105-h1ggr4f37siqk2lk8b33eqo68d77g9n6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "416173972105-89vn43ivj646lm14evq031643ebkp3j9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pokedex"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
