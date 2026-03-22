@@ -17,6 +17,7 @@ class PokemonDetailsScreen extends StatefulWidget {
 class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   late final PokemonDetailsViewModel _pokemonDetailsViewModel;
   bool isFavourite = false;
+  bool isInitialLoad = true;
 
   @override
   void initState() {
@@ -47,6 +48,9 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
             return Center(child: CircularProgressIndicator());
           }
           if (state is PokemonDetailsLoaded) {
+            if(isInitialLoad){
+              isFavourite = state.pokemon.isFavourite;
+            }
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -70,8 +74,9 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                             onTap: () { 
                               setState(() {
                                 isFavourite = !isFavourite;
+                                isInitialLoad = false;
                               });
-                              _pokemonDetailsViewModel.favourite(widget.pokemonName, false);
+                              _pokemonDetailsViewModel.favourite(widget.pokemonName, state.pokemon.isFavourite);
 
                             },
                             child: Icon(

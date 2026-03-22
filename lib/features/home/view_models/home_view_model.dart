@@ -6,7 +6,7 @@ class HomeViewModel {
   ThemeBloc _themeBloc;
   HomeViewModel(this._homeBloc, this._themeBloc);
 
-  void loadPokemons(isFavourites){
+  void loadPokemons(bool isFavourites){
     _homeBloc.add(LoadPokemons(isFavourites));
   }
 

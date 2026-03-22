@@ -23,14 +23,16 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+
   @override
   Widget build(BuildContext context) {
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthBloc(AuthService())),
         BlocProvider(create: (context) => HomeBloc(ApiService(), LocalStorageService())),
-        BlocProvider(create: (context) => ThemeBloc()),
-        BlocProvider(create: (context) => PokemonDetailsBloc(ApiService())),
+        BlocProvider(create: (context) => ThemeBloc(LocalStorageService())..add(LoadTheme())),
+        BlocProvider(create: (context) => PokemonDetailsBloc(ApiService(), LocalStorageService())),
         BlocProvider(create: (context) => FavouriteBloc(LocalStorageService()))
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(

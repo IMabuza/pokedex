@@ -6,12 +6,24 @@ class Pokemon {
   final String description;
   final List<Stat> stats;
   final List<Type> types;
+  bool isFavourite;
 
-  Pokemon({required this.imageUrl, required this.description, required this.stats, required this.types});
+  Pokemon({
+    this.isFavourite = false,
 
-  factory Pokemon.fromJsons(Map<String, dynamic> json1, Map<String, dynamic> json2,) {
+    required this.imageUrl,
+    required this.description,
+    required this.stats,
+    required this.types,
+  });
+
+  factory Pokemon.fromJsons(
+    Map<String, dynamic> json1,
+    Map<String, dynamic> json2,
+  ) {
     return Pokemon(
-      imageUrl: json1['sprites']['other']['official-artwork']["front_default"] ?? '',
+      imageUrl:
+          json1['sprites']['other']['official-artwork']["front_default"] ?? '',
       description: json2['flavor_text_entries'][0]['flavor_text'] ?? '',
       stats: List<Stat>.from(json1['stats']?.map((x) => Stat.fromJson(x))),
       types: List<Type>.from(json1['types']?.map((x) => Type.fromJson(x))),

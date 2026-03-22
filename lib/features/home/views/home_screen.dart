@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final _searchController = TextEditingController();
   bool isDarkMode = false;
   bool isFavourites = false;
+  bool isInitialLoad = true;
 
   @override
   void initState() {
@@ -39,24 +40,32 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-                InkWell(
-                  onTap: () {
-                    homeViewModel.changeTheme(isDarkMode);
-                    setState(() {
-                      isDarkMode = !isDarkMode;
-                    });
+                BlocBuilder<ThemeBloc, ThemeState>(
+                  
+                  builder: (context, state) {
+                    if(isInitialLoad){
+                      isDarkMode = state is ThemeDark;
+                    }
+                    return GestureDetector(
+                      onTap: () {
+                        homeViewModel.changeTheme(isDarkMode);
+                        setState(() {
+                          isDarkMode = !isDarkMode;
+                        });
+                      },
+                      child: isDarkMode
+                          ? Icon(Icons.light_mode)
+                          : Icon(Icons.dark_mode),
+                    );
                   },
-                  child: isDarkMode
-                      ? Icon(Icons.light_mode)
-                      : Icon(Icons.dark_mode),
                 ),
                 SizedBox(width: 10),
                 GestureDetector(
                   onTap: () {
-                    homeViewModel.loadPokemons(isFavourites);
                     setState(() {
                       isFavourites = !isFavourites;
                     });
+                    homeViewModel.loadPokemons(isFavourites);
                   },
                   child: Icon(
                     isFavourites ? Icons.favorite : Icons.favorite_border,

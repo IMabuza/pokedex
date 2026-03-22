@@ -14,7 +14,7 @@ class PokemonDetailsViewModel {
     if(isFavourite){
       _favouriteBloc.add(UnFavourite(name));
     }else{
-       _favouriteBloc.add(UnFavourite(name));
+       _favouriteBloc.add(Favourite(name));
     }
   }
 }

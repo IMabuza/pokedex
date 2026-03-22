@@ -13,8 +13,8 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ApiService _apiService;
   final LocalStorageService _localStorageService;
-  final List<PokemonListItem> items = [];
-  final List<PokemonListItem> faves = [];
+  List<PokemonListItem> items = [];
+  List<PokemonListItem> faves = [];
   int limit = 20;
   HomeBloc(this._apiService, this._localStorageService) : super(HomeInitial()) {
     on<LoadPokemons>(_onLoadPokemons);
@@ -40,7 +40,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
 
       List<String> faveIds = await _localStorageService.getAllFavouriteIds();
-     
+
       final result = cachedData!.map((c) {
         final Map<String, dynamic> pokemonMap = Map<String, dynamic>.from(c);
         final pokemon = PokemonListItem.fromJson(pokemonMap);
@@ -48,15 +48,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return pokemon;
       }).toList();
 
-      if(event.isFavourites){
-          faves.addAll(result.where((p) => p.isFavourite));
-          emit(HomeLoaded(faves.take(limit).toList()));
-      }else{
+      if (event.isFavourites) {
+        faves = (faves.toSet()..addAll(result.where((p) => p.isFavourite))).toList();
+        emit(HomeLoaded(faves.take(limit).toList()));
+      } else {
+        items = (items.toSet()..addAll(result)).toList();
         emit(HomeLoaded(items.take(limit).toList()));
       }
-      
 
-      
       limit += 20;
     } catch (e) {
       emit(HomeError("Failed to load Pokemon"));

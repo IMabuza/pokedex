@@ -1,7 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
 class LocalStorageService {
-  Future<Box> openBox<T>(String boxName,) async {
+  Future<Box> openBox<T>(String boxName) async {
     return await Hive.openBox<T>(boxName);
   }
 
@@ -22,11 +22,21 @@ class LocalStorageService {
 
   Future<List<String>> getAllFavouriteIds() async {
     final box = Hive.box<String>("favourites");
-    return  box.values.toList();
+    return box.values.toList();
   }
 
   Future<void> removeFavouriteId(String id) async {
     final box = Hive.box<String>("favourites");
     box.delete(id);
+  }
+
+  Future<void> saveTheme(bool isDarkTheme) async {
+    final box = Hive.box<bool>("theme");
+    await box.put("isDarkTheme", isDarkTheme);
+  }
+
+  bool? isDartTheme() {
+    final box = Hive.box<bool>("theme");
+    return box.get("isDarkTheme");
   }
 }

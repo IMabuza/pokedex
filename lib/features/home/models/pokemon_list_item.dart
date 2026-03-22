@@ -1,4 +1,6 @@
-class PokemonListItem {
+import 'package:equatable/equatable.dart';
+
+class PokemonListItem extends Equatable {
   final String name;
   final String url;
   final String id;
@@ -14,4 +16,7 @@ class PokemonListItem {
       id: json['url'].split('/').reversed.elementAt(1),
     );
   }
+  
+  @override
+  List<Object?> get props => [name,url,id];
 }

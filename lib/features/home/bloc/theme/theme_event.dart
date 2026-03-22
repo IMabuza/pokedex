@@ -13,3 +13,5 @@ class ThemeToggle extends ThemeEvent{
 
   const ThemeToggle(this.isDarkMode);
 }
+
+class LoadTheme extends ThemeEvent {}
