@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pokedex/core/widgets/primary_button.dart';
 import 'package:pokedex/features/home/bloc/home_bloc.dart';
 import 'package:pokedex/features/home/bloc/theme/theme_bloc.dart';
@@ -60,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 suffix: Padding(
                   padding: EdgeInsets.only(left: 5),
                   child: GestureDetector(
-                    onTap: () => homeViewModel.search(_searchController.text),
+                    onTap: () {
+                      homeViewModel.search(_searchController.text);
+                      _searchController.clear();
+                      },
                     child: Icon(Icons.search)),
                 ),
               ),
@@ -85,18 +89,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
-                          ListTile(
-                            key: PageStorageKey("home_list"),
-                            title: Text(state.items[index].name),
-                            leading: CachedNetworkImage(
-                              errorWidget: (context, url, error) => Icon(Icons.error),
-                              placeholder: (context, url) => CircularProgressIndicator(),
-                              width: 50,
-                              height: 50,
-                              
-                              imageUrl: 
-                                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${state.items[index].id}.png",
-                             
+                          InkWell(
+                            onTap: () => context.push("/pokemon/${state.items[index].name}"),
+                            child: ListTile(
+                              key: PageStorageKey("home_list"),
+                              title: Text(state.items[index].name),
+                              leading: CachedNetworkImage(
+                                errorWidget: (context, url, error) => Icon(Icons.error),
+                                placeholder: (context, url) => CircularProgressIndicator(),
+                                width: 50,
+                                height: 50,
+                                
+                                imageUrl: 
+                                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${state.items[index].id}.png",
+                               
+                              ),
                             ),
                           ),
                           Divider(),

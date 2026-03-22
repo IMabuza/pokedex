@@ -8,6 +8,7 @@ import 'package:pokedex/features/auth/services/auth_service.dart';
 import 'package:pokedex/features/home/bloc/home_bloc.dart';
 import 'package:pokedex/features/home/bloc/theme/theme_bloc.dart';
 import 'package:pokedex/features/home/services/api_service.dart';
+import 'package:pokedex/features/pokemon_details/bloc/pokemon_details_bloc.dart';
 import 'package:pokedex/firebase_options.dart';
 import 'package:pokedex/router.dart';
 
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthBloc(AuthService())),
         BlocProvider(create: (context) => HomeBloc(ApiService(), LocalStorageService())),
-        BlocProvider(create: (context) => ThemeBloc())
+        BlocProvider(create: (context) => ThemeBloc()),
+        BlocProvider(create: (context) => PokemonDetailsBloc(ApiService()))
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {

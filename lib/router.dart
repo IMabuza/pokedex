@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pokedex/features/auth/views/login_screen.dart';
 import 'package:pokedex/features/auth/views/register_screen.dart';
 import 'package:pokedex/features/home/views/home_screen.dart';
+import 'package:pokedex/features/pokemon_details/views/pokemon_details_screen.dart';
 
 class AppRouter {
   static final GoRouter _router = GoRouter(
@@ -22,6 +23,14 @@ class AppRouter {
         path: "/home",
         name: "home",
         builder: (context, state) => HomeScreen(),
+      ),
+      GoRoute(
+        path: "/pokemon/:name",
+        name: "details",
+        builder: (context, state) {
+          final name = state.pathParameters["name"] as String;
+          return PokemonDetailsScreen(pokemonName: name);
+        },
       ),
     ],
   );
