@@ -8,9 +8,10 @@ class HomeEvent extends Equatable {
 }
 
 
-class LoadPokemons extends HomeEvent{
-  final int limit;
-  final int offSet;
+class LoadPokemons extends HomeEvent{}
 
-  const LoadPokemons(this.limit, this.offSet);
+class Search extends HomeEvent {
+  final String name;
+
+  const Search(this.name);
 }

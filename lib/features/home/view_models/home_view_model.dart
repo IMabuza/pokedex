@@ -7,10 +7,14 @@ class HomeViewModel {
   HomeViewModel(this._homeBloc, this._themeBloc);
 
   void loadPokemons(){
-    _homeBloc.add(LoadPokemons(20, 0));
+    _homeBloc.add(LoadPokemons());
   }
 
   void changeTheme(bool isDarkMode){
     _themeBloc.add(ThemeToggle(isDarkMode));
+  }
+
+  void search(String name){
+    _homeBloc.add(Search(name));
   }
 }
