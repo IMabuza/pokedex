@@ -8,7 +8,10 @@ class HomeEvent extends Equatable {
 }
 
 
-class LoadPokemons extends HomeEvent{}
+class LoadPokemons extends HomeEvent{
+  final bool isFavourites;
+  const LoadPokemons(this.isFavourites);
+}
 
 class Search extends HomeEvent {
   final String name;

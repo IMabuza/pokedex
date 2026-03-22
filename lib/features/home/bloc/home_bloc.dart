@@ -14,6 +14,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ApiService _apiService;
   final LocalStorageService _localStorageService;
   final List<PokemonListItem> items = [];
+  final List<PokemonListItem> faves = [];
   int limit = 20;
   HomeBloc(this._apiService, this._localStorageService) : super(HomeInitial()) {
     on<LoadPokemons>(_onLoadPokemons);
@@ -38,13 +39,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         cachedData = await _localStorageService.getCachedPokemonData();
       }
 
+      List<String> faveIds = await _localStorageService.getAllFavouriteIds();
+     
       final result = cachedData!.map((c) {
         final Map<String, dynamic> pokemonMap = Map<String, dynamic>.from(c);
-        return PokemonListItem.fromJson(pokemonMap);
+        final pokemon = PokemonListItem.fromJson(pokemonMap);
+        pokemon.isFavourite = faveIds.contains(pokemon.name);
+        return pokemon;
       }).toList();
 
-      items.addAll(result);
-      emit(HomeLoaded(items.take(limit).toList()));
+      if(event.isFavourites){
+          faves.addAll(result.where((p) => p.isFavourite));
+          emit(HomeLoaded(faves.take(limit).toList()));
+      }else{
+        emit(HomeLoaded(items.take(limit).toList()));
+      }
+      
+
+      
       limit += 20;
     } catch (e) {
       emit(HomeError("Failed to load Pokemon"));
@@ -56,14 +68,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeLoading(false));
       final data = await _localStorageService.getCachedPokemonData();
 
-        final result = data!.map((c) {
+      final result = data!.map((c) {
         final Map<String, dynamic> pokemonMap = Map<String, dynamic>.from(c);
         return PokemonListItem.fromJson(pokemonMap);
       }).toList();
 
-      final filter = result.where((item) => item.name.contains(event.name.toLowerCase()));
+      final filter = result.where(
+        (item) => item.name.contains(event.name.toLowerCase()),
+      );
 
-        emit(HomeLoaded(filter.toList()));
+      emit(HomeLoaded(filter.toList()));
     } catch (_) {
       emit(HomeError("Failed to search"));
     }

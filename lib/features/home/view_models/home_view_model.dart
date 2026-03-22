@@ -6,8 +6,8 @@ class HomeViewModel {
   ThemeBloc _themeBloc;
   HomeViewModel(this._homeBloc, this._themeBloc);
 
-  void loadPokemons(){
-    _homeBloc.add(LoadPokemons());
+  void loadPokemons(isFavourites){
+    _homeBloc.add(LoadPokemons(isFavourites));
   }
 
   void changeTheme(bool isDarkMode){

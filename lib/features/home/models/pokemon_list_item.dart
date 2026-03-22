@@ -2,8 +2,9 @@ class PokemonListItem {
   final String name;
   final String url;
   final String id;
+  bool isFavourite;
 
-  PokemonListItem({required this.name, required this.url, required this.id});
+  PokemonListItem({this.isFavourite = false, required this.name, required this.url, required this.id});
    
 
   factory PokemonListItem.fromJson(Map<String, dynamic> json) {

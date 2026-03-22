@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late final HomeViewModel homeViewModel;
   final _searchController = TextEditingController();
   bool isDarkMode = false;
+  bool isFavourites = false;
 
   @override
   void initState() {
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final homeBloc = BlocProvider.of<HomeBloc>(context);
     final themeBloc = BlocProvider.of<ThemeBloc>(context);
     homeViewModel = HomeViewModel(homeBloc, themeBloc);
-    homeViewModel.loadPokemons();
+    homeViewModel.loadPokemons(false);
   }
 
   @override
@@ -35,17 +36,34 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text("Pokédex"),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  homeViewModel.changeTheme(isDarkMode);
-                  isDarkMode = !isDarkMode;
-                });
-              },
-              child: isDarkMode
-                  ? Icon(Icons.light_mode)
-                  : Icon(Icons.dark_mode),
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    homeViewModel.changeTheme(isDarkMode);
+                    setState(() {
+                      isDarkMode = !isDarkMode;
+                    });
+                  },
+                  child: isDarkMode
+                      ? Icon(Icons.light_mode)
+                      : Icon(Icons.dark_mode),
+                ),
+                SizedBox(width: 10),
+                GestureDetector(
+                  onTap: () {
+                    homeViewModel.loadPokemons(isFavourites);
+                    setState(() {
+                      isFavourites = !isFavourites;
+                    });
+                  },
+                  child: Icon(
+                    isFavourites ? Icons.favorite : Icons.favorite_border,
+                    color: isFavourites ? Colors.red : Colors.grey,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -64,8 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       homeViewModel.search(_searchController.text);
                       _searchController.clear();
-                      },
-                    child: Icon(Icons.search)),
+                    },
+                    child: Icon(Icons.search),
+                  ),
                 ),
               ),
             ),
@@ -79,32 +98,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 }
                 if (state is HomeLoaded) {
-
-                  if(state.items.isEmpty){
-                    return Center(
-                      child: Text("No Pokemon found"),
-                    );
+                  if (state.items.isEmpty) {
+                    return Center(child: Text("No Pokemon found"));
                   }
                   return ListView.builder(
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
-                          InkWell(
-                            onTap: () => context.push("/pokemon/${state.items[index].name}"),
-                            child: ListTile(
-                              key: PageStorageKey("home_list"),
-                              title: Text(state.items[index].name),
-                              leading: CachedNetworkImage(
-                                errorWidget: (context, url, error) => Icon(Icons.error),
-                                placeholder: (context, url) => CircularProgressIndicator(),
-                                width: 50,
-                                height: 50,
-                                
-                                imageUrl: 
-                                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${state.items[index].id}.png",
-                               
-                              ),
-                            ),
+                          ItemTile(
+                            id: state.items[index].id,
+                            name: state.items[index].name,
                           ),
                           Divider(),
                           if (index ==
@@ -112,7 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 state.items.reversed.elementAt(0),
                               ))
                             PrimaryButton(
-                              onPress: () => homeViewModel.loadPokemons(),
+                              onPress: () =>
+                                  homeViewModel.loadPokemons(isFavourites),
                               buttonText: "Load more",
                               isLoading: state is HomeLoading,
                             ),
@@ -132,6 +136,33 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ItemTile extends StatelessWidget {
+  const ItemTile({super.key, required this.name, required this.id});
+
+  final String name;
+  final String id;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => context.push("/pokemon/$name"),
+      child: ListTile(
+        key: PageStorageKey("home_list"),
+        title: Text(name),
+        leading: CachedNetworkImage(
+          errorWidget: (context, url, error) => Icon(Icons.error),
+          placeholder: (context, url) => CircularProgressIndicator(),
+          width: 50,
+          height: 50,
+
+          imageUrl:
+              "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/$id.png",
+        ),
       ),
     );
   }
