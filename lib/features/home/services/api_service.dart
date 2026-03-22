@@ -41,8 +41,7 @@ class ApiService {
    
 
       final result = Pokemon.fromJsons(physicalData, speciesData);
- 
-      print(result.imageUrl);
+
 
       return result;
     } on DioException catch (e) {

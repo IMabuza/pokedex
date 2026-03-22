@@ -27,7 +27,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       emit(HomeLoading(limit == 20));
 
-      await _localStorageService.openBox("allPokemon");
+      await _localStorageService.openBox<List<dynamic>>("allPokemon");
+      await _localStorageService.openBox<String>("favourites");
       List<dynamic>? cachedData = await _localStorageService
           .getCachedPokemonData();
 
@@ -60,7 +61,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return PokemonListItem.fromJson(pokemonMap);
       }).toList();
 
-      final filter = result.where((item) => item.name.contains(event.name));
+      final filter = result.where((item) => item.name.contains(event.name.toLowerCase()));
 
         emit(HomeLoaded(filter.toList()));
     } catch (_) {

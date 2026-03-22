@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pokedex/core/bloc/favourite_bloc.dart';
 import 'package:pokedex/core/services/local_storage_service.dart';
 import 'package:pokedex/features/auth/bloc/auth_bloc.dart';
 import 'package:pokedex/features/auth/services/auth_service.dart';
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthBloc(AuthService())),
         BlocProvider(create: (context) => HomeBloc(ApiService(), LocalStorageService())),
         BlocProvider(create: (context) => ThemeBloc()),
-        BlocProvider(create: (context) => PokemonDetailsBloc(ApiService()))
+        BlocProvider(create: (context) => PokemonDetailsBloc(ApiService())),
+        BlocProvider(create: (context) => FavouriteBloc(LocalStorageService()))
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
