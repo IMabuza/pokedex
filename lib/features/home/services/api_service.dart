@@ -1,14 +1,9 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:pokedex/features/home/models/pokemon_list_item.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pokedex/features/pokemon_details/models/pokemon.dart';
 
 class ApiService {
-  static const baseUrl = "https://pokeapi.co/api/v2";
-
-  final Dio _dio = Dio(BaseOptions(baseUrl: baseUrl));
+  final Dio _dio = Dio(BaseOptions(baseUrl: dotenv.env['base_url'] ?? ""));
 
   Future<List<dynamic>> fetchPokemon() async {
     try {

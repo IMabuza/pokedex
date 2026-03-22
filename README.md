@@ -1,18 +1,106 @@
 # pokedex
 
-Pokemon view
+
+## About
+The app allows users to load, view and favourite pokemons.
+
+## Tech Stack
+
+### Core Framework
+
+- **Flutter 3.41.4**
+- **Dart 3.11.1**
+
+## State Management & Architecture
+
+- **BLoC**
+- **equatable**
+
+### Authenetication
+
+- **Firebase Auth**
+
+### Data and Storage
+
+- **Dio**: Http client
+- **Hive**: Local storage
+- **catched_network_imaege**: for image chaching
+
+## Navigation and Routing
+
+- **go_router**
+
+## Architecture 
+
+1. **Presentation Layer (Views)**
+    - UI
+    - BLoc 
+
+2. **Business Logic Layer (BLoCs)**
+   - `AuthBloc`
+   - `HomeBloc`
+   - `ThemeBloc`
+   - `PokemonDetailsBloc`
+   - `FavouriteBloc`
+
+3. **Services Later**
+
+   - `AuthService`
+   - `ApiService`
+   - `LocalStorageService`
+
+4. **Data layer **
+   
+   - Hive: Local storage and caching
+   - PokeAPI: Remote datashourse
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- **Flutter SDK** 3.42.1 or higher
+- **Dart SDK**: 3.11.1
+- **Android SDK** install Android Studio
+- **Xcode**: For IOS testing
+- **Firebase Project**: Firebase project that has email/password authentication enabled
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+### Installation Steps
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# pokedex
+1. **Clone repository**
+
+2. **Install Dependencies**
+```bash 
+flutter pub get
+```
+3. **Configure Firebase**
+
+   **Use FlutterFire CLI (Recommended)**
+   ```bash
+   flutter pub global activate flutterfire_cli
+   flutterfire configure
+   ```
+4. **Run the App**
+
+  **For Android**
+  ```bash
+  flutter run android
+  ```
+
+  **For IOS**
+  ```bash
+  flutter run ios
+  ```
+
+  **For web**
+  ```bash
+  flutter run web
+  ```
+
+  **Happy Coding!!**
+
+
+
+
+
+
