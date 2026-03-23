@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Stat {
   final int baseStat;
   final int effort;

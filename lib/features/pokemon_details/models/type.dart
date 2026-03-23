@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Type {
   final int slot;
   final String name;
